@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan  3 19:59:39 2017 Joubert Miguel
+** Last update Thu Jan  5 14:25:03 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
