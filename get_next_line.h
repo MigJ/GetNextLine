@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 17:01:30 2017 Joubert Miguel
-** Last update Tue Jan  3 19:14:12 2017 Joubert Miguel
+** Last update Thu Jan  5 18:13:18 2017 Joubert Miguel
 */
 
 #include <string.h>
@@ -16,9 +16,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#ifndef MY_H
-#define MY_H
+#ifndef _get_next_line
+#define _get_next_line
 
-#define READ_SIZE 1
+#define READ_SIZE 4
 
 #endif
