@@ -5,12 +5,12 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Fri Jan  6 15:33:20 2017 Joubert Miguel
+** Last update Fri Jan  6 17:41:16 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
 
-int     my_ret_line(char *str, int i, int a)
+int	my_ret_line(char *str, int i, int a)
 {
   if (a == 0)
     {
@@ -31,7 +31,7 @@ int     my_ret_line(char *str, int i, int a)
   return ((a == 0) ? i + 1 : i);
 }
 
-char    *my_strcat(char *dest, char *src)
+char	*my_strcat(char *dest, char *src)
 {
   char  *res;
   int   i;
@@ -50,15 +50,15 @@ char    *my_strcat(char *dest, char *src)
   return (res);
 }
 
-char	*remalloc(char *str, int size, int a)
+char	*remalloc(char *str, int size, int a, int i)
 {
-  int	i;
   char	*tmp;
 
-  i = 0;
   if (a == 0)
     {
-      tmp = malloc(sizeof(char) * (my_ret_line(str, 0, 1) + size + 1));
+      tmp = malloc(sizeof(char) * 1000);
+      if (str == 0)
+	return (tmp);
       while (str[i] != 0)
 	{
 	  tmp[i] = str[i];
@@ -79,33 +79,30 @@ char	*remalloc(char *str, int size, int a)
   return ((a == 0) ? tmp : str);
 }
 
-char	*get_next_line_fd_null(const int fd, int a)
+char	*get_next_line_fd_null(const int fd, int a, int k)
 {
   t_StaticFd	S;
   t_GetnextFd	G;
 
-  G.k = 0;
   if (a == 0 && fd != 0)
     {
       G.dest = malloc(sizeof(char) * READ_SIZE);
       S.str = malloc(sizeof(char) * READ_SIZE);
-      while ((G.k = read(fd, G.dest, READ_SIZE)) > 0)
+      while ((k = read(fd, G.dest, READ_SIZE)) > 0)
 	{
-	  G.tmp = G.k;
+	  G.tmp = k;
 	  G.dest[READ_SIZE] = 0;
-	  S.str = (*S.str != 0) ? my_strcat(S.str, G.dest) : G.dest;
-	  S.str = remalloc(S.str, READ_SIZE, 0);
+	  S.str = my_strcat(S.str, G.dest);
 	}
-      S.str = remalloc(S.str, G.tmp, 1);
+      S.str = remalloc(S.str, G.tmp, 1, 0);
     }
   if (a != 0 && fd == 0)
-    { 
-      G.dest = malloc(sizeof(char) + 1);
+    {
       while (read(fd, S.buffer, 1) > 0 && *S.buffer != '\n')
 	{
-	  G.dest[G.k++] = *S.buffer;
-	  G.dest[G.k] = 0;
-	  G.dest = remalloc(G.dest, READ_SIZE, 0);
+	  G.dest = remalloc(G.dest, READ_SIZE, 0, 0);
+	  G.dest[k++] = *S.buffer;
+	  G.dest[k] = 0;
 	}
     }
   return ((a == 0) ? S.str : G.dest);
@@ -117,7 +114,7 @@ char	*get_next_line(const int fd)
   static t_Static	S;
 
   G.tmp = G.j = 0;
-  (S.a == 0 && fd != 0) ? S.str = get_next_line_fd_null(fd, S.a), S.a++ : 0;
+  (S.a == 0 && fd != 0) ? S.str = get_next_line_fd_null(fd, S.a, 0), S.a++ : 0;
   if (S.a != 0 && fd != 0)
     {
       G.tmp = S.i;
@@ -135,7 +132,7 @@ char	*get_next_line(const int fd)
       G.buffer[G.j - 1] = 0;
     }
   else
-    G.buffer = get_next_line_fd_null(fd, 1);
+    G.buffer = get_next_line_fd_null(fd, 1, 0);
   return (G.buffer);
 }
 
@@ -153,4 +150,4 @@ char	*get_next_line(const int fd)
       write(1, "\n", 1);
       free(s);
     }
-    }*/
+}*/
