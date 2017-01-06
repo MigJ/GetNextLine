@@ -5,15 +5,13 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Fri Jan  6 15:07:57 2017 Joubert Miguel
+** Last update Fri Jan  6 15:33:20 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
 
 int     my_ret_line(char *str, int i, int a)
 {
-  char	c;
-
   if (a == 0)
     {
       if (str[i] == 0)
@@ -24,14 +22,32 @@ int     my_ret_line(char *str, int i, int a)
 	    return (i);
 	  i++;
 	}
-      return (i + 1);
     }
   if (a == 1)
     {
       while (str[i] != 0)
 	i++;
-      return (i);
     }
+  return ((a == 0) ? i + 1 : i);
+}
+
+char    *my_strcat(char *dest, char *src)
+{
+  char  *res;
+  int   i;
+  int   write;
+
+  res = malloc(sizeof(char) * my_ret_line(dest, 0, 1)
+	       + my_ret_line(src, 0, 1) + 1);
+  i = -1;
+  write = 0;
+  while (dest[++i])
+    res[write++] = dest[i];
+  i = -1;
+  while (src[++i])
+    res[write++] = src[i];
+  res[write] = '\0';
+  return (res);
 }
 
 char	*remalloc(char *str, int size, int a)
@@ -77,7 +93,7 @@ char	*get_next_line_fd_null(const int fd, int a)
 	{
 	  G.tmp = G.k;
 	  G.dest[READ_SIZE] = 0;
-	  S.str = (*S.str != 0) ? strcat(S.str, G.dest) : G.dest;
+	  S.str = (*S.str != 0) ? my_strcat(S.str, G.dest) : G.dest;
 	  S.str = remalloc(S.str, READ_SIZE, 0);
 	}
       S.str = remalloc(S.str, G.tmp, 1);
@@ -85,14 +101,12 @@ char	*get_next_line_fd_null(const int fd, int a)
   if (a != 0 && fd == 0)
     { 
       G.dest = malloc(sizeof(char) + 1);
-      *G.dest = 0;
       while (read(fd, S.buffer, 1) > 0 && *S.buffer != '\n')
 	{
 	  G.dest[G.k++] = *S.buffer;
 	  G.dest[G.k] = 0;
 	  G.dest = remalloc(G.dest, READ_SIZE, 0);
 	}
-      G.dest[G.k] = 0;
     }
   return ((a == 0) ? S.str : G.dest);
 }
@@ -130,6 +144,8 @@ char	*get_next_line(const int fd)
   char	*s;
   int	fd;
 
+  if (ac < 2)
+    exit (84);
   fd = open(av[1], O_RDONLY);
   while ((s = get_next_line(fd)) != 0)
     {
@@ -137,4 +153,4 @@ char	*get_next_line(const int fd)
       write(1, "\n", 1);
       free(s);
     }
-}*/
+    }*/
