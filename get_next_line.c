@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Mon Jan  9 18:38:09 2017 Joubert Miguel
+** Last update Mon Jan  9 19:49:01 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
@@ -31,44 +31,59 @@ char	*my_strcat(char *dest, char *src)
 char	*get_next_line(const int fd)
 {
   static char *str;
-  static char *buffer;
+  char *buffer;
   char *dest;
   static int a;
   static int k;
+  int j;
   int	i;
-  int	tmp;
 
   if (a == 0)
     {
       k = 0;
-      buffer = malloc(sizeof(char) * READ_SIZE + 1);
       str = malloc(sizeof(char) * READ_SIZE + 1);
       *str = 0;
-      while ((i = read(fd, buffer, READ_SIZE)) > 0)
-	{
-	  tmp = i;
-	  buffer[tmp] = 0;
-	  str = my_strcat(str, buffer);
-	}
       a++;
     }
-  if (a != 0)
+  j = 0;
+  buffer = malloc(sizeof(char) * READ_SIZE + 1);
+  while ((i = read(fd, buffer, READ_SIZE)) > 0)
     {
-      i = 0;
-      dest = malloc(sizeof(char) * tmp);
-      while (str[k] != 0)
+      buffer[i] = 0;
+      str = my_strcat(str, buffer);
+      (j == 0) ? dest = malloc(sizeof(char) * strlen(str)) : 0;
+      (j != 0) ? dest = my_strcat(dest, "\0") : 0;
+      i += k;
+      while (k != i)
 	{
+	  if (str[k] == 0)
+	    {
+	      dest = 0;
+	      return (dest);
+	    }
 	  if (str[k] == '\n')
 	    {
-	      dest[i] = 0;
+	      dest[j] = 0;
 	      k++;
 	      return (dest);
 	    }
-	  dest[i] = str[k];
-	  i++, k++;
+	  dest[j] = str[k];
+	  j++, k++;
 	}
     }
-  (str[k] == 0) ? dest = 0 : 0;
+  dest = malloc(sizeof(char) * strlen(str));
+  while (str[k])
+    {
+      if (str[k] == '\n')
+	{
+	  dest[j] = 0;
+	  k++;
+	  return (dest);
+	}
+      dest[j] = str[k];
+      j++, k++;
+    }
+  dest = 0;
   return (dest);
 }
 
