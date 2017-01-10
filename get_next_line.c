@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan 10 14:36:26 2017 Joubert Miguel
+** Last update Tue Jan 10 14:41:55 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
@@ -14,6 +14,7 @@ size_t	my_strlen(char *str)
 {
   size_t	i;
 
+  i = 0;
   while (str[i])
     i++;
   return (i);
