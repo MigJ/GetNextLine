@@ -5,9 +5,16 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan 10 15:59:24 2017 Joubert Miguel
+** Last update Tue Jan 10 16:30:05 2017 Joubert Miguel
 */
 
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "get_next_line.h"
 
 size_t	my_strlen(char *str)
