@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan 10 14:20:11 2017 Joubert Miguel
+** Last update Tue Jan 10 14:27:56 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
@@ -39,6 +39,8 @@ char	*get_next_line(const int fd)
   int j;
   int	i;
 
+  if (fd < 0)
+    return (NULL);
   if (a == 0)
     {
       k = 0;
@@ -95,7 +97,7 @@ char	*get_next_line(const int fd)
   return (dest);
 }
 
-/*int	main(int ac, char **av)
+int	main(int ac, char **av)
 {
   char	*s;
   int	fd;
@@ -103,10 +105,10 @@ char	*get_next_line(const int fd)
   if (ac < 2)
     exit (84);
   fd = open(av[1], O_RDONLY);
-  while (s = get_next_line(0))
+  while (s = get_next_line(fd))
     {
       write(1, s, strlen(s));
       write(1, "\n", 1);
       free(s);
     }
-    }*/
+}
