@@ -5,10 +5,19 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan 10 14:32:39 2017 Joubert Miguel
+** Last update Tue Jan 10 14:36:26 2017 Joubert Miguel
 */
 
 #include "get_next_line.h"
+
+size_t	my_strlen(char *str)
+{
+  size_t	i;
+
+  while (str[i])
+    i++;
+  return (i);
+}
 
 char	*my_strcat(char *dest, char *src)
 {
@@ -16,7 +25,7 @@ char	*my_strcat(char *dest, char *src)
   int   i;
   int   write;
 
-  if ((res = malloc(sizeof(char) * ((strlen(dest) + strlen(src) + 1) * 100))) == NULL)
+  if ((res = malloc(sizeof(char) * ((my_strlen(dest) + my_strlen(src) + 1) * 100))) == NULL)
     exit (84);
   i = -1;
   write = 0;
@@ -58,7 +67,7 @@ char	*get_next_line(const int fd)
       str = my_strcat(str, buffer);
       if (j == 0)
 	{
-	  if ((dest = malloc(sizeof(char) * strlen(str) * 100)) == NULL)
+	  if ((dest = malloc(sizeof(char) * my_strlen(str) * 100)) == NULL)
 	    exit (84);
 	}
       (j != 0) ? dest = my_strcat(dest, "\0") : 0;
@@ -67,7 +76,7 @@ char	*get_next_line(const int fd)
 	{
 	  if (str[k] == 0)
 	    {
-	      dest = 0;
+	      dest = NULL;
 	      return (dest);
 	    }
 	  if (str[k] == '\n')
@@ -80,7 +89,7 @@ char	*get_next_line(const int fd)
 	  j++, k++;
 	}
     }
-  if ((dest = malloc(sizeof(char) * strlen(str) * 100)) == NULL)
+  if ((dest = malloc(sizeof(char) * my_strlen(str) * 100)) == NULL)
     exit (84);
   while (str[k])
     {
@@ -93,7 +102,7 @@ char	*get_next_line(const int fd)
       dest[j] = str[k];
       j++, k++;
     }
-  dest = 0;
+  dest = NULL;
   return (dest);
 }
 
