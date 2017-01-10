@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 17:01:30 2017 Joubert Miguel
-** Last update Mon Jan  9 19:48:43 2017 Joubert Miguel
+** Last update Tue Jan 10 15:57:25 2017 Joubert Miguel
 */
 
 #ifndef _GET_NEXT_LINE
@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define READ_SIZE 23
+#define READ_SIZE 1000
 
 char    *my_strcat(char *dest, char *src);
 
