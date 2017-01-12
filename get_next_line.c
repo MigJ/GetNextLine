@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Thu Jan 12 20:20:19 2017 Joubert Miguel
+** Last update Thu Jan 12 20:24:38 2017 Joubert Miguel
 */
 
 #include <string.h>
@@ -135,7 +135,7 @@ char	*get_next_line(const int fd)
   return ((*S.dest == 0) ? NULL : S.dest);
 }
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
   char	*s;
   int	fd;
@@ -150,4 +150,4 @@ int	main(int ac, char **av)
       //write(1, "\n", 1);
       free(s);
     }
-}
+}*/
