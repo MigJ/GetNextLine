@@ -5,11 +5,11 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 17:01:30 2017 Joubert Miguel
-** Last update Thu Jan 12 20:22:11 2017 Joubert Miguel
+** Last update Thu Jan 12 20:41:40 2017 Joubert Miguel
 */
 
 #ifndef READ_SIZE
-#define READ_SIZE (1)
+#define READ_SIZE (1000)
 #endif /* !READ_SIZE */
 
 #ifndef _GET_NEXT_LINE

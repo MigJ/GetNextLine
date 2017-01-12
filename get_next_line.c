@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Thu Jan 12 20:24:38 2017 Joubert Miguel
+** Last update Thu Jan 12 20:47:16 2017 Joubert Miguel
 */
 
 #include <string.h>
@@ -73,17 +73,11 @@ t_Static	my_read(t_Static S, const int fd)
 	  S.i += S.k;
 	  while (S.k != S.i)
 	    {
-	      if (S.str[S.k] == 0)
+	      if (S.str[S.k] == 0 || S.str[S.k] == '\n')
 		{
 		  S.dest = my_realloc(S.dest);
-		  S.dest = 0;
-		  return (S);
-		}
-	      if (S.str[S.k] == '\n')
-		{
-		  S.dest = my_realloc(S.dest);
-		  S.dest[S.j] = 0;
-		  S.k++;
+		  (S.str[S.k] == 0) ? S.dest = 0 : 0;
+		  (S.str[S.k] == '\n') ? S.dest[S.j] = 0, S.k++ : 0;
 		  return (S);
 		}
 	      S.dest = my_realloc(S.dest);
@@ -116,7 +110,7 @@ char	*get_next_line(const int fd)
   if ((S.buffer = malloc(sizeof(char) * (READ_SIZE + 1) * 100)) == NULL)
     return (NULL);
   S = my_read(S, fd);
-  if (S.str[S.k] == 0 || S.str[S.k] == '\n')
+  if ((S.str[S.k] == 0 || S.str[S.k - 1] == '\n') && S.i > 0)
     return (S.dest);
   while (S.str[S.k])
     {
