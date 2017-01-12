@@ -5,9 +5,25 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 17:01:30 2017 Joubert Miguel
-** Last update Tue Jan 10 16:27:52 2017 Joubert Miguel
+** Last update Thu Jan 12 20:22:11 2017 Joubert Miguel
 */
 
 #ifndef READ_SIZE
 #define READ_SIZE (1)
 #endif /* !READ_SIZE */
+
+#ifndef _GET_NEXT_LINE
+#define _GET_NEXT_LINE
+
+typedef struct s_Static
+{
+  char *str;
+  char *dest;
+  char *buffer;
+  int j;
+  int a;
+  int k;
+  int i;
+}t_Static;
+
+#endif /* !_GET_NEXT_LINE */

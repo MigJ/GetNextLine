@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Tue Jan 10 16:30:05 2017 Joubert Miguel
+** Last update Thu Jan 12 20:20:19 2017 Joubert Miguel
 */
 
 #include <string.h>
@@ -17,24 +17,17 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-size_t	my_strlen(char *str)
-{
-  size_t	i;
-
-  i = 0;
-  while (str[i])
-    i++;
-  return (i);
-}
-
 char	*my_realloc(char *str)
 {
   int	i;
   char	*dest;
 
   i = 0;
-  if ((dest = malloc(sizeof(char) * my_strlen(str) + 1)) == NULL)
+  while (str[i])
+    i++;
+  if ((dest = malloc(sizeof(char) * i + 1)) == NULL)
     return (NULL);
+  i = 0;
   while (str[i])
     {
       dest[i] = str[i];
@@ -48,9 +41,15 @@ char	*my_strcat(char *dest, char *src)
 {
   char  *res;
   int   i;
+  int	j;
   int   write;
 
-  if ((res = malloc(sizeof(char) * ((my_strlen(dest) + my_strlen(src) + 1) * 100))) == NULL)
+  j = i = 0;
+  while (dest[i])
+    i++;
+  while (src[j])
+    j++;
+  if ((res = malloc(sizeof(char) * ((i + j + 1) * 100))) == NULL)
     return (NULL);
   i = -1;
   write = 0;
@@ -63,77 +62,80 @@ char	*my_strcat(char *dest, char *src)
   return (res);
 }
 
-char	*get_next_line(const int fd)
+t_Static	my_read(t_Static S, const int fd)
 {
-  static char *str;
-  char *buffer;
-  static char *dest;
-  static int a;
-  static int k;
-  int	j;
-  static int	i = 1;
-
-  j = 0;
-  if (fd < 0)
-    return (NULL);
-  if (a == 0)
+  if (S.i > 0)
     {
-      k = 0;
-      if ((str = malloc(sizeof(char) * (READ_SIZE + 1) * 100)) == NULL)
-	return (NULL);
-      if ((dest = malloc(sizeof(char))) == NULL)
-	return (NULL);
-      *str = 0;
-      a++;
-    }
-  if ((buffer = malloc(sizeof(char) * (READ_SIZE + 1) * 100)) == NULL)
-    return (NULL);
-  if (i > 0)
-    {
-      while ((i = read(fd, buffer, READ_SIZE)) > 0)
+      while ((S.i = read(fd, S.buffer, READ_SIZE)) > 0)
 	{
-	  buffer[i] = 0;
-	  str = my_strcat(str, buffer);
-	  i += k;
-	  while (k != i)
+	  S.buffer[S.i] = 0;
+	  S.str = my_strcat(S.str, S.buffer);
+	  S.i += S.k;
+	  while (S.k != S.i)
 	    {
-	      if (str[k] == 0)
+	      if (S.str[S.k] == 0)
 		{
-		  dest = my_realloc(dest);
-		  dest = 0;
-		  return (dest);
+		  S.dest = my_realloc(S.dest);
+		  S.dest = 0;
+		  return (S);
 		}
-	      if (str[k] == '\n')
+	      if (S.str[S.k] == '\n')
 		{
-		  dest = my_realloc(dest);
-		  dest[j] = 0;
-		  k++;
-		  return (dest);
+		  S.dest = my_realloc(S.dest);
+		  S.dest[S.j] = 0;
+		  S.k++;
+		  return (S);
 		}
-	      dest = my_realloc(dest);
-	      dest[j] = str[k];
-	      j++, k++;
+	      S.dest = my_realloc(S.dest);
+	      S.dest[S.j] = S.str[S.k];
+	      S.j++, S.k++;
 	    }
 	}
     }
-  while (str[k])
-    {
-      if (str[k] == '\n')
-	{
-	  dest = my_realloc(dest);
-	  dest[j] = 0;
-	  k++;
-	  return (dest);
-	}
-      dest = my_realloc(dest);
-      dest[j] = str[k];
-      j++, k++;
-    }
-  dest[j] = 0;
-  return ((*dest == 0) ? NULL : dest);
+  return (S);
 }
 
-/*int	main(int ac, char **av)
+char	*get_next_line(const int fd)
+{
+  static t_Static	S;
+
+  S.j = 0;
+  if (fd < 0)
+    return (NULL);
+  if (S.a == 0)
+    {
+      S.i = 1;
+      S.k = 0;
+      if ((S.str = malloc(sizeof(char) * (READ_SIZE + 1) * 100)) == NULL)
+	return (NULL);
+      if ((S.dest = malloc(sizeof(char))) == NULL)
+	return (NULL);
+      *S.str = 0;
+      S.a++;
+    }
+  if ((S.buffer = malloc(sizeof(char) * (READ_SIZE + 1) * 100)) == NULL)
+    return (NULL);
+  S = my_read(S, fd);
+  if (S.str[S.k] == 0 || S.str[S.k] == '\n')
+    return (S.dest);
+  while (S.str[S.k])
+    {
+      if (S.str[S.k] == '\n')
+	{
+	  S.dest = my_realloc(S.dest);
+	  S.dest[S.j] = 0;
+	  S.k++;
+	  return (S.dest);
+	}
+      S.dest = my_realloc(S.dest);
+      S.dest[S.j] = S.str[S.k];
+      S.j++, S.k++;
+    }
+  S.dest[S.j] = 0;
+  return ((*S.dest == 0) ? NULL : S.dest);
+}
+
+int	main(int ac, char **av)
 {
   char	*s;
   int	fd;
@@ -141,11 +143,11 @@ char	*get_next_line(const int fd)
   if (ac < 2)
     exit (84);
   fd = open(av[1], O_RDONLY);
-  while (s = get_next_line(fd))
+  while (s = get_next_line(0))
     {
       printf("%s\n", s);
       //write(1, s, strlen(s));
       //write(1, "\n", 1);
       free(s);
     }
-}*/
+}
