@@ -5,7 +5,7 @@
 ** Login   <miguel.joubert@epitech.eu>
 ** 
 ** Started on  Tue Jan  3 16:36:02 2017 Joubert Miguel
-** Last update Thu Jan 12 23:11:59 2017 Joubert Miguel
+** Last update Sun Jan 15 14:57:11 2017 Joubert Miguel
 */
 
 #include <string.h>
@@ -138,20 +138,3 @@ char	*get_next_line(const int fd)
     return (S.dest);
   return ((*S.dest == 0) ? NULL : S.dest);
 }
-
-/*int	main(int ac, char **av)
-{
-  char	*s;
-  int	fd;
-
-  if (ac < 2)
-    exit (84);
-  fd = open(av[1], O_RDONLY);
-  while ((s = get_next_line(0)))
-    {
-      printf("%s\n", s);
-      //write(1, s, strlen(s));
-      //write(1, "\n", 1);
-      free(s);
-    }
-}*/
