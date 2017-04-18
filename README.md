@@ -10,4 +10,4 @@ gcc *.c
 
 USAGE
 
-cat "file" | ./a.out or ./a.out with standard entry
+cat "file" | ./a.out or ./a.out with standard input
