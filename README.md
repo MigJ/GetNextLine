@@ -11,3 +11,6 @@ gcc *.c
 USAGE
 
 cat "file" | ./a.out or ./a.out with standard input
+
+
+Note : 17.5 / 20
